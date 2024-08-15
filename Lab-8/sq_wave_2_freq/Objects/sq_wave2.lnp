@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\sq_wave2.obj" 
+TO ".\Objects\sq_wave2" 
+PRINT(".\Listings\sq_wave2.m51") RAMSIZE(256) 

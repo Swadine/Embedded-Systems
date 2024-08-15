@@ -1,0 +1,129 @@
+A51 MACRO ASSEMBLER  MUSIC                                                                02/06/2023 14:32:14 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\music.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE music.asm SET(SMALL) DEBUG PRINT(.\Listings\music.lst) OBJECT(.\Objects
+                      \music.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 00H
+0000 020100            2     LJMP MAIN
+                       3     
+0100                   4     ORG 100H
+0100                   5     MAIN:
+0100 758000            6     MOV P0, #00H
+0103 75900F            7     MOV P1, #0FH
+0106 3130              8     CALL MUSIC
+0108 80FE              9     HERE: SJMP HERE
+                      10     
+0130                  11     ORG 130H
+0130                  12     MUSIC:
+0130 E590             13     MOV A, P1
+0132 540F             14     ANL A, #0FH
+0134 B40106           15     CJNE A, #01H, RE
+0137                  16     SA: 
+0137 B287             17     CPL P0.7
+0139 3155             18     CALL DELAY_255
+013B 80F3             19     JMP MUSIC
+                      20     
+013D                  21     RE:
+013D B40306           22     CJNE A, #03H, GA
+0140 B287             23     CPL P0.7
+0142 3166             24     CALL DELAY_290
+0144 80EA             25     JMP MUSIC
+                      26     
+0146                  27     GA:
+0146 B40706           28     CJNE A, #07H, MA
+0149 B287             29     CPL P0.7
+014B 3177             30     CALL DELAY_325
+014D 80E1             31     JMP MUSIC
+                      32     
+014F                  33     MA:
+014F B287             34     CPL P0.7
+0151 3188             35     CALL DELAY_345
+0153 80DB             36     JMP MUSIC
+                      37     
+0155                  38     DELAY_255:
+0155 C000             39     PUSH 00H 
+0157 C001             40     PUSH 01H 
+0159 782B             41     MOV R0, #43  
+015B 792C             42     D_255_2: MOV R1, #44  
+015D D9FE             43     D_255_1: DJNZ R1, D_255_1 
+015F D8FA             44     DJNZ R0, D_255_2 
+0161 D001             45     POP 01H 
+0163 D000             46     POP 00H 
+0165 22               47     RET 
+                      48     
+0166                  49     DELAY_290:
+0166 C000             50     PUSH 00H
+0168 C001             51     PUSH 01H
+016A 7829             52     MOV R0, #41
+016C 7928             53     D_290_2: MOV R1, #40 
+016E D9FE             54     D_290_1: DJNZ R1, D_290_1 
+0170 D8FA             55     DJNZ R0, D_290_2 
+0172 D001             56     POP 01H
+0174 D000             57     POP 00H
+A51 MACRO ASSEMBLER  MUSIC                                                                02/06/2023 14:32:14 PAGE     2
+
+0176 22               58     RET
+                      59     
+0177                  60     DELAY_325:
+0177 C000             61     PUSH 00H
+0179 C001             62     PUSH 01H
+017B 7826             63     MOV R0, #38
+017D 7927             64     D_325_2: MOV R1, #39 
+017F D9FE             65     D_325_1: DJNZ R1, D_325_1 
+0181 D8FA             66     DJNZ R0, D_325_2 
+0183 D001             67     POP 01H
+0185 D000             68     POP 00H
+0187 22               69     RET
+                      70     
+0188                  71     DELAY_345:
+0188 C000             72     PUSH 00H
+018A C001             73     PUSH 01H
+018C 7826             74     MOV R0, #38
+018E 7924             75     D_345_2: MOV R1, #36  
+0190 D9FE             76     D_345_1: DJNZ R1, D_345_1 
+0192 D8FA             77     DJNZ R0, D_345_2 
+0194 D001             78     POP 01H
+0196 D000             79     POP 00H
+0198 22               80     RET
+                      81     
+                      82     END
+A51 MACRO ASSEMBLER  MUSIC                                                                02/06/2023 14:32:14 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY_255. . . . .  C ADDR   0155H   A   
+DELAY_290. . . . .  C ADDR   0166H   A   
+DELAY_325. . . . .  C ADDR   0177H   A   
+DELAY_345. . . . .  C ADDR   0188H   A   
+D_255_1. . . . . .  C ADDR   015DH   A   
+D_255_2. . . . . .  C ADDR   015BH   A   
+D_290_1. . . . . .  C ADDR   016EH   A   
+D_290_2. . . . . .  C ADDR   016CH   A   
+D_325_1. . . . . .  C ADDR   017FH   A   
+D_325_2. . . . . .  C ADDR   017DH   A   
+D_345_1. . . . . .  C ADDR   0190H   A   
+D_345_2. . . . . .  C ADDR   018EH   A   
+GA . . . . . . . .  C ADDR   0146H   A   
+HERE . . . . . . .  C ADDR   0108H   A   
+MA . . . . . . . .  C ADDR   014FH   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+MUSIC. . . . . . .  C ADDR   0130H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+RE . . . . . . . .  C ADDR   013DH   A   
+SA . . . . . . . .  C ADDR   0137H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

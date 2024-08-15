@@ -1,0 +1,89 @@
+C51 COMPILER V9.60.7.0   STOPWATCH                                                         03/14/2023 14:28:27 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE STOPWATCH
+OBJECT MODULE PLACED IN .\Objects\stopwatch.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE stopwatch.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\stopwatch.lst) TABS(2) OBJECT(.\Objects\stopwatch.obj)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          #include "lcd.h"
+   3          
+   4          sbit INP = P3^4;
+   5          sbit ON = P1^0;
+   6          
+   7          code unsigned char start[] = "Start StopWatch";
+   8          code unsigned char counting[] = "    YES...?    ";
+   9          
+  10          void update_lcd(unsigned int* t, unsigned char *s);
+  11          void timerDelay(void);
+  12          
+  13          void main(void){
+  14   1      
+  15   1          unsigned int time;
+  16   1          unsigned char time_string[] = "     00:00     ";
+  17   1      
+  18   1        while(1){
+  19   2              lcd_init();
+  20   2              lcd_cmd(0x80);
+  21   2              lcd_write_string(start);
+  22   2              lcd_cmd(0xC0);
+  23   2              lcd_write_string(time_string);
+  24   2      
+  25   2              while(ON == 0);
+  26   2      
+  27   2              lcd_cmd(0x80);
+  28   2              lcd_write_string(counting);
+  29   2      
+  30   2              time = 0;
+  31   2              TMOD = 0x01;
+  32   2      
+  33   2              while(ON){
+  34   3                  timerDelay();
+  35   3                  time++;
+  36   3                  update_lcd(&time, time_string);
+  37   3              }
+  38   2              msdelay(2000);
+  39   2              time_string[5] = '0';
+  40   2              time_string[6] = '0';
+  41   2              time_string[8] = '0';
+  42   2              time_string[9] = '0';
+  43   2          }
+  44   1      }
+  45          
+  46          void timerDelay(void){
+  47   1          TH0 = 0xFF;
+  48   1          TL0 = 0xC4;
+  49   1          TR0 = 1;
+  50   1          while(TF0 == 0); // Waits for one second
+  51   1          TR0 = 0;
+  52   1          TF0 = 0;
+  53   1      }
+  54          
+C51 COMPILER V9.60.7.0   STOPWATCH                                                         03/14/2023 14:28:27 PAGE 2   
+
+  55          void update_lcd(unsigned int* t, unsigned char *s){
+  56   1          s[5] = (((*t) / 60)/10) + '0';
+  57   1          s[6] = (((*t) / 60)%10) + '0';
+  58   1          s[8] = (((*t) % 60)/10) + '0';
+  59   1          s[9] = (((*t) % 60)%10) + '0';
+  60   1          lcd_cmd(0xC0);
+  61   1          lcd_write_string(s);
+  62   1      }
+  63            
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    508    ----
+   CONSTANT SIZE    =     48    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      27
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
